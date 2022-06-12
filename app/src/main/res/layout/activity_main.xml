@@ -53,7 +53,7 @@
             android:id="@+id/passwordEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="아이디 입력" />
+            android:hint="비밀번호 입력" />
 
         <Button
             android:id="@+id/loginBt"
