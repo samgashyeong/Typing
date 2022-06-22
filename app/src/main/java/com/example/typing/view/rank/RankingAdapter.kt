@@ -1,6 +1,8 @@
 package com.example.typing.view.rank
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +25,7 @@ class RankingAdapter(val data : ArrayList<Ranking>) : RecyclerView.Adapter<Ranki
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Log.d(TAG, "onBindViewHolder: ${data[position]}")
         holder.userName.text = data[position].userName
         holder.steersman.text = "${data[position].steersman}타"
         holder.rank.text = "${position+1}등"
