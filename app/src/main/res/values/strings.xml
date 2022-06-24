@@ -4,5 +4,11 @@
     <string name="ranking">랭킹</string>
     <string name="time_attack">타임어택</string>
     <string name="normal_practice">일반연습</string>
+    <string name="time_limit">제한시간</string>
+    <string name="cur_tpm">현재타수</string>
+    <string name="pls_type">문장을 입력하세요</string>
+    <string name="aver_tpm">평균타수</string>
+    <string name="stop_game">그만두기</string>
+    <string name="timer_icon_desc">this is timer icon</string>
     <string name="ranking1">RANKING</string>
 </resources>

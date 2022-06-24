@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="time_attack_btn2" type="id" />
+    <item name="normal_game_btn" type="id" />
     <item name="time_attack_btn" type="id" />
     <item name="rank_btn" type="id" />
     <item name="textView3" type="id" />
