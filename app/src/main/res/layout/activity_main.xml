@@ -16,7 +16,7 @@
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/y_light"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/time_attack_btn2"
+            app:layout_constraintBottom_toTopOf="@+id/normal_game_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="오프라인 모드입니다." />
@@ -67,7 +67,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/time_attack_btn2"
+            android:id="@+id/normal_game_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"

@@ -17,6 +17,10 @@
             android:name=".view.rank.RankActivity"
             android:exported="false" />
         <activity
+            android:name=".view.game.GameActivity"
+            android:windowSoftInputMode="adjustResize|stateVisible"
+            android:exported="false" />
+        <activity
             android:name=".view.login.LoginActivity"
             android:exported="true">
             <intent-filter>
