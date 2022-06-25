@@ -1,8 +1,10 @@
 package com.example.typing.view
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.example.typing.R
 import com.example.typing.databinding.ActivityMainBinding
@@ -26,11 +28,11 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-
         binding.timeAttackBtn.setOnClickListener {
-//            startActivity(
-//                Intent(this, 클래스이름)
-//            )
+            val i = Intent(this, GameActivity::class.java)
+            i.putExtra("isTimeAttackMode", true)
+            startActivity(i)
+            finish()
         }
 
         binding.normalGameBtn.setOnClickListener {

@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="100dp"
             android:fontFamily="@font/teunteun"
-            android:text="로그인"
+            android:text="@string/login"
             android:textColor="@color/black"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/y_light"
-                android:text="Email"
+                android:text="@string/email"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -44,13 +44,13 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/y_light"
                 android:inputType="textEmailAddress"
-                android:hint="이메일 입력" />
+                android:hint="@string/pls_type_email" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/y_light"
-                android:text="PW"
+                android:text="@string/pw"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/y_light"
                 android:inputType="textPassword"
-                android:hint="비밀번호 입력" />
+                android:hint="@string/pls_type_pw" />
 
             <Button
                 android:id="@+id/loginBt"
@@ -70,7 +70,7 @@
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/main_color"
                 android:fontFamily="@font/y_light"
-                android:text="로그인"
+                android:text="@string/login"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -82,7 +82,7 @@
                 android:layout_gravity="right"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/y_light"
-                android:text="회원가입하기"
+                android:text="@string/do_signup"
                 android:textColor="@color/black" />
         </LinearLayout>
 
@@ -95,7 +95,7 @@
             android:width="160dp"
             android:backgroundTint="@color/main_color"
             android:fontFamily="@font/y_light"
-            android:text="오프라인 플레이"
+            android:text="@string/offline_play"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"

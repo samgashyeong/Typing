@@ -33,10 +33,13 @@ class GameActivity : AppCompatActivity(), Runnable {
     private var stage = 0
     private var execTime = 0L
     private var beforeLength = 0
+    private var maxLimitTime = 60.0
+    private var curLimitTime = maxLimitTime
     private val thread: Thread = Thread(this)
     private lateinit var binding : ActivityGameBinding
     private var typingTexts = ArrayList<String>();
     private var typingText = ""
+    private var isTimeAttackMode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,12 +49,18 @@ class GameActivity : AppCompatActivity(), Runnable {
         typingTexts = ResourceLoader.getTypingTexts()
         typingText = typingTexts[abs(Random().nextInt()) % typingTexts.size]
 
-        val isTimeAttackMode = intent.extras?.getBoolean("isTimeAttackMode", false) == true
+        isTimeAttackMode = intent.getBooleanExtra("isTimeAttackMode", false)
 
         if(!isTimeAttackMode) {
             binding.timerIconIv.visibility = View.INVISIBLE
             binding.timeLimitTitle.visibility = View.INVISIBLE
             binding.timeLimitTv.visibility = View.INVISIBLE
+        }
+        else {
+            binding.timerIconIv.visibility = View.VISIBLE
+            binding.timeLimitTitle.visibility = View.VISIBLE
+            binding.timeLimitTv.visibility = View.VISIBLE
+            binding.timeLimitTv.text = String.format("%.1f초", maxLimitTime)
         }
 
         binding.typingTv.text = typingText;
@@ -129,6 +138,12 @@ class GameActivity : AppCompatActivity(), Runnable {
         try {
             while (true) {
                 Thread.sleep(max(0L, 100 - execTime))
+                if(typeStart > -1L && isTimeAttackMode) {
+                    curLimitTime -= 0.1
+                    runOnUiThread {
+                        binding.timeLimitTv.text = String.format("%.1f초", curLimitTime)
+                    }
+                }
                 start = System.currentTimeMillis()
                 currentTime++
                 if(typeStart > -1L && currentTime % 10 == 0) {
@@ -144,7 +159,10 @@ class GameActivity : AppCompatActivity(), Runnable {
                         typeStart = -1L
                         totalTPM += tpm
                         typingText = typingTexts[abs(Random().nextInt()) % typingTexts.size]
+                        maxLimitTime *= 0.93
+                        curLimitTime = maxLimitTime
                         runOnUiThread {
+                            binding.timeLimitTv.text = String.format("%.1f초", maxLimitTime)
                             binding.curTpmTv.text = "0타"
                             binding.typingEt.text.clear()
                             binding.typingTv.text = typingText
