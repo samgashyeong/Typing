@@ -28,7 +28,13 @@ class LoginActivity : AppCompatActivity() {
                 Intent(this, SignUpActivity::class.java)
             )
         }
-        
+
+        binding.offineBt.setOnClickListener {
+            startActivity(
+                Intent(this, MainActivity::class.java)
+            )
+        }
+
         binding.loginBt.setOnClickListener {
             if (binding.emailEt.text.isBlank() or binding.passwordEt.text.isBlank()){
                 Toast.makeText(this, "빈칸을 채워주세요!", Toast.LENGTH_SHORT).show()

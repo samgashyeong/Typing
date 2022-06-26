@@ -1,6 +1,6 @@
 package com.example.typing.data
 
 data class Ranking(
-    val userName : String,
-    val steersman : Int
+    val uid : String,
+    val typingSpeed : Int
 )
