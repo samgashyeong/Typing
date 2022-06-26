@@ -18,4 +18,5 @@
     <string name="pls_type_pw">비밀번호 입력</string>
     <string name="do_signup">회원가입하기</string>
     <string name="offline_play">오프라인 플레이</string>
+    <string name="game_result">게임 결과</string>
 </resources>

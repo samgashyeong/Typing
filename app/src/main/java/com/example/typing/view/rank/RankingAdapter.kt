@@ -14,7 +14,7 @@ import com.example.typing.data.Ranking
 import com.example.typing.databinding.ActivityRankBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
-class RankingAdapter(val data : ArrayList<Ranking>, val binding : ActivityRankBinding,val uid : String) : RecyclerView.Adapter<RankingAdapter.MyViewHolder>() {
+class RankingAdapter(val data : ArrayList<Ranking>, val binding : ActivityRankBinding, val uid : String) : RecyclerView.Adapter<RankingAdapter.MyViewHolder>() {
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var userName: TextView = itemView.findViewById(R.id.userNameTv)
         val steersman : TextView= itemView.findViewById(R.id.steersmanTv)

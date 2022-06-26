@@ -12,6 +12,12 @@ import com.example.typing.data.Ranking
 import com.example.typing.databinding.ActivityRankBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -22,6 +28,8 @@ class RankActivity : AppCompatActivity() {
     private lateinit var auth : FirebaseAuth
     private lateinit var nickName : String
     private lateinit var uid : String
+
+    @Suppress("UNCHECKED_CAST")
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,17 +59,14 @@ class RankActivity : AppCompatActivity() {
                     for(i in list){
                         rankingArray.add(Ranking(i["uid"].toString(), i["typingSpeed"].toString().toInt()))
                     }
-                    rankingArray.sortByDescending {
-                        it.typingSpeed
+                    rankingArray.sortByDescending { ranking ->
+                        ranking.typingSpeed
                     }
-
-
                     Log.d(TAG, "onCreate: $rankingArray")
                     renamefirebase(rankingArray)
                 }
             }
     }
-
 
     private fun renamefirebase(rankingArray: ArrayList<Ranking>) {
         Log.d(TAG, "renamefirebase: 적용하기")
@@ -69,15 +74,4 @@ class RankActivity : AppCompatActivity() {
         binding.recycler.layoutManager = LinearLayoutManager(this)
         binding.recycler.adapter = RankingAdapter(rankingArray, binding, uid)
     }
-
-//    private fun getName(uid: String): String {
-//        val docRef = fs.collection("user").document(uid)
-//        docRef.get().addOnSuccessListener { document ->
-//            if(document != null) {
-//                val nick = document.getString("nickName")
-//                item.nickname = nick
-//                return@addOnSuccessListener
-//            }
-//        }
-//    }
 }

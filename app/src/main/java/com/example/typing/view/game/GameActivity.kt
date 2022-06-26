@@ -1,6 +1,6 @@
 package com.example.typing.view.game
 
-import android.content.ContentValues.TAG
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -10,13 +10,13 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.example.typing.R
 import com.example.typing.databinding.ActivityGameBinding
-import com.example.typing.view.MainActivity
+import com.example.typing.view.rank.RankActivity
 import com.example.typing.view.util.KoreanSeparator
 import com.example.typing.view.util.ResourceLoader
 import java.lang.Long.max
@@ -53,8 +53,8 @@ class GameActivity : AppCompatActivity(), Runnable {
 
         if(!isTimeAttackMode) {
             binding.timerIconIv.visibility = View.INVISIBLE
-            binding.timeLimitTitle.visibility = View.INVISIBLE
-            binding.timeLimitTv.visibility = View.INVISIBLE
+            binding.timeLimitTitle.visibility = View.GONE
+            binding.timeLimitTv.visibility = View.GONE
         }
         else {
             binding.timerIconIv.visibility = View.VISIBLE
@@ -69,8 +69,19 @@ class GameActivity : AppCompatActivity(), Runnable {
         binding.curTpmTv.text = "0타"
 
         binding.stopGameBtn.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+            if(stage <= 5) {
+                showAlertDialog("그만두기", "5문장 이상 완료하지 못하면 랭킹에 등록되지 않습니다. 그만두시겠습니까?", {
+                        _, _ ->
+                    gotoResultActivity()
+                    finish()
+                }, {
+                        _, _ ->
+                })
+            }
+            else {
+                gotoResultActivity()
+                finish()
+            }
         }
 
         binding.typingEt.requestFocus()
@@ -134,6 +145,33 @@ class GameActivity : AppCompatActivity(), Runnable {
         textView.text = builder;
     }
 
+    private fun showAlertDialog(title: String, msg: String,
+                                positiveListener: DialogInterface.OnClickListener,
+                                negativeListener: DialogInterface.OnClickListener) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(title)
+        builder.setMessage(msg)
+        builder.setPositiveButton("확인", positiveListener)
+        builder.setNegativeButton("취소", negativeListener)
+        builder.show()
+    }
+
+    private fun gotoResultActivity() {
+        var correctLen = 0
+        val typedLen = min(binding.typingEt.text.length, binding.typingTv.text.length)
+        for (i in 0 until min(typedLen, typingText.length)) {
+            if(binding.typingEt.text[i] == typingText[i]) correctLen++
+            else break
+        }
+        val tpm = KoreanSeparator.separate(typingText.substring(0 until correctLen)).length /
+                (System.currentTimeMillis() - typeStart).toDouble() * 1000 * 60
+        val i = Intent(this@GameActivity, ResultActivity::class.java)
+        i.putExtra("averTPM", (totalTPM + tpm) / stage)
+        i.putExtra("stage", stage)
+        startActivity(i)
+        finish()
+    }
+
     override fun run() {
         try {
             while (true) {
@@ -142,6 +180,10 @@ class GameActivity : AppCompatActivity(), Runnable {
                     curLimitTime -= 0.1
                     runOnUiThread {
                         binding.timeLimitTv.text = String.format("%.1f초", curLimitTime)
+                    }
+                    if(curLimitTime <= 0) {
+                        typeStart = -1L
+                        gotoResultActivity()
                     }
                 }
                 start = System.currentTimeMillis()
