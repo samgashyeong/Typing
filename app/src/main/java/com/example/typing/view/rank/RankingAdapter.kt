@@ -30,7 +30,7 @@ class RankingAdapter(val data : ArrayList<Ranking>, val binding : ActivityRankBi
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder: ${data[position]}")
-        if(position < 2){
+        if(position < 3){
             holder.background.setBackgroundResource(R.drawable.recyclerview_boder_ranker)
         }
         if(data[position].uid == uid){
