@@ -21,6 +21,7 @@ import com.example.typing.view.util.NetworkStatus
 import com.example.typing.view.util.ResourceLoader
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.function.BooleanSupplier
 
 
 class MainActivity : AppCompatActivity() {
@@ -50,10 +51,10 @@ class MainActivity : AppCompatActivity() {
         }
         binding.rankBtn.setOnClickListener {
             val status = NetworkStatus.getConnectivityStatus(this)
-            if(status == 3){
+            if (status == NetworkStatus.TYPE_NOT_CONNECTED) {
                 Toast.makeText(this, "인터넷을 연결한 후에 시도해주세요", Toast.LENGTH_SHORT).show()
             }
-            else{
+            else {
                 startActivity(
                     Intent(this, RankActivity::class.java)
                         .putExtra("nickName", userName)

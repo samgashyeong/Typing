@@ -31,13 +31,13 @@
             app:layout_constraintBottom_toTopOf="@+id/normal_game_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="오프라인 모드입니다." />
+            android:text="@string/is_offline" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/teunteun"
+            android:fontFamily="@font/teun_teun"
             android:text="@string/typing"
             android:textColor="@color/black"
             android:textSize="50sp"

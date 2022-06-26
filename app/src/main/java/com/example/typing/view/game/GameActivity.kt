@@ -72,7 +72,7 @@ class GameActivity : AppCompatActivity(), Runnable {
         binding.curTpmTv.text = "0타"
 
         binding.stopGameBtn.setOnClickListener {
-            if(stage <= 5) {
+            if(clearedTextCount < 5) {
                 showAlertDialog("그만두기", "5문장 이상 완료하지 못하면 랭킹에 등록되지 않습니다. 그만두시겠습니까?", {
                         _, _ ->
                     gotoResultActivity()

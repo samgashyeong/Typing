@@ -22,7 +22,7 @@
             android:id="@+id/time_limit_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/teunteun"
+            android:fontFamily="@font/teun_teun"
             android:text="@string/time_limit"
             android:textColor="@color/black"
             android:textSize="20sp"

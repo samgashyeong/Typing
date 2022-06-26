@@ -35,7 +35,7 @@ class RankingAdapter(val data : ArrayList<Ranking>, val binding : ActivityRankBi
         }
         if(data[position].uid == uid){
             binding.rankingTv.text = "${position+1}등"
-            binding.steersmanTv.text = "${data[position].typingSpeed}타"
+            binding.steersmanTv.text = String.format("%.1f타", data[position].typingSpeed)
             Log.d(TAG, "onBindViewHolder: 같음")
         }
         val docRef = FirebaseFirestore.getInstance().collection("user").document(data[position].uid)
@@ -47,7 +47,7 @@ class RankingAdapter(val data : ArrayList<Ranking>, val binding : ActivityRankBi
             }
         }
         //holder.userName.text = data[position].uid
-        holder.steersman.text = "${data[position].typingSpeed}타"
+        holder.steersman.text = String.format("%.1f타", data[position].typingSpeed)
         holder.rank.text = "${position+1}등"
     }
 

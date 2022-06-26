@@ -55,9 +55,8 @@ class RankActivity : AppCompatActivity() {
                 if(it.isSuccessful){
                     Log.d(TAG, "onCreate:데이터 받아오기 ${it.result}")
                     val list = it.result!!.data!!.getValue("rank") as ArrayList<HashMap<*, *>>
-                    val uid = ArrayList<String>()
                     for(i in list){
-                        rankingArray.add(Ranking(i["uid"].toString(), i["typingSpeed"].toString().toInt()))
+                        rankingArray.add(Ranking(i["uid"].toString(), i["typingSpeed"].toString().toDouble()))
                     }
                     rankingArray.sortByDescending { ranking ->
                         ranking.typingSpeed

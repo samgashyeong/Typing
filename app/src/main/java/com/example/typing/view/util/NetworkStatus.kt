@@ -6,8 +6,8 @@ import android.net.ConnectivityManager
 @Suppress("DEPRECATION")
 class NetworkStatus {
     companion object {
-        private const val TYPE_WIFI : Int = 1
-        private const val TYPE_MOBILE : Int = 2
+        const val TYPE_WIFI = 1
+        const val TYPE_MOBILE = 2
         const val TYPE_NOT_CONNECTED = 3
 
         public fun getConnectivityStatus(context: Context) : Int {
