@@ -2,11 +2,13 @@ package com.example.typing.view
 
 import android.content.ContentValues.TAG
 import android.content.ContentValues
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.typing.R
@@ -60,6 +62,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.userNameTv.setOnClickListener {
+            showAlertDialog(if(auth.currentUser == null) "로그인" else "로그아웃", "로그인 화면으로 가시겠습니까?", {
+                    _, _ ->
+                auth.signOut()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }, {
+                    _, _ ->
+            })
+        }
+
         binding.timeAttackBtn.setOnClickListener {
             val i = Intent(this, GameActivity::class.java)
             i.putExtra("isTimeAttackMode", true)
@@ -87,5 +100,16 @@ class MainActivity : AppCompatActivity() {
                     binding.userNameTv.text = userName
                 }
             }
+    }
+
+    private fun showAlertDialog(title: String, msg: String,
+                                positiveListener: DialogInterface.OnClickListener,
+                                negativeListener: DialogInterface.OnClickListener) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(title)
+        builder.setMessage(msg)
+        builder.setPositiveButton("확인", positiveListener)
+        builder.setNegativeButton("취소", negativeListener)
+        builder.show()
     }
 }

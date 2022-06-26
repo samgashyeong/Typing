@@ -1,5 +1,6 @@
 package com.example.typing.view.login
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -54,6 +55,7 @@ class SignUpActivity : AppCompatActivity() {
         }.addOnFailureListener {
             Toast.makeText(this, "죄송합니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
         }
+
     }
 
     private fun applyDb(email: String, nickName: String) {
@@ -64,6 +66,7 @@ class SignUpActivity : AppCompatActivity() {
         )
         db.collection("user").document(auth.currentUser?.uid.toString())
             .set(data)
+        startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
 }

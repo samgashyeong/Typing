@@ -1,5 +1,6 @@
 package com.example.typing.view.game
 
+import android.content.ContentValues.TAG
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
@@ -10,6 +11,7 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -19,10 +21,10 @@ import com.example.typing.databinding.ActivityGameBinding
 import com.example.typing.view.rank.RankActivity
 import com.example.typing.view.util.KoreanSeparator
 import com.example.typing.view.util.ResourceLoader
-import java.lang.Long.max
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.abs
+import kotlin.math.max
 import kotlin.math.min
 
 class GameActivity : AppCompatActivity(), Runnable {
@@ -31,6 +33,7 @@ class GameActivity : AppCompatActivity(), Runnable {
     private var typeStart = -1L
     private var totalTPM = 0.0
     private var stage = 0
+    private var clearedTextCount = 0
     private var execTime = 0L
     private var beforeLength = 0
     private var maxLimitTime = 60.0
@@ -163,11 +166,12 @@ class GameActivity : AppCompatActivity(), Runnable {
             if(binding.typingEt.text[i] == typingText[i]) correctLen++
             else break
         }
-        val tpm = KoreanSeparator.separate(typingText.substring(0 until correctLen)).length /
+        val tpm = if(typeStart == -1L) 0.0 else KoreanSeparator.separate(typingText.substring(0 until correctLen)).length /
                 (System.currentTimeMillis() - typeStart).toDouble() * 1000 * 60
+        Log.d(TAG, "gotoResultActivity: $tpm")
         val i = Intent(this@GameActivity, ResultActivity::class.java)
-        i.putExtra("averTPM", (totalTPM + tpm) / stage)
-        i.putExtra("stage", stage)
+        i.putExtra("averTPM", (totalTPM + tpm) / max(stage, 1))
+        i.putExtra("stage", clearedTextCount)
         startActivity(i)
         finish()
     }
@@ -199,6 +203,7 @@ class GameActivity : AppCompatActivity(), Runnable {
                             (System.currentTimeMillis() - typeStart).toDouble() * 1000 * 60
                     if(correctLen >= typingText.length) {
                         typeStart = -1L
+                        clearedTextCount++
                         totalTPM += tpm
                         typingText = typingTexts[abs(Random().nextInt()) % typingTexts.size]
                         maxLimitTime *= 0.93
@@ -212,14 +217,8 @@ class GameActivity : AppCompatActivity(), Runnable {
                         continue
                     }
                     runOnUiThread {
-                        binding.curTpmTv.text = String.format(
-                            "%.1f타",
-                            tpm
-                        )
-                        binding.averTpmTv.text = String.format(
-                            "%.1f타",
-                            (totalTPM + tpm) / stage
-                        )
+                        binding.curTpmTv.text = String.format("%.1f타", tpm)
+                        binding.averTpmTv.text = String.format("%.1f타", (totalTPM + tpm) / stage)
                     }
                 }
                 execTime = System.currentTimeMillis() - start
