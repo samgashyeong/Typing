@@ -10,6 +10,7 @@ import com.example.typing.view.MainActivity
 import com.example.typing.R
 import com.example.typing.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginBinding

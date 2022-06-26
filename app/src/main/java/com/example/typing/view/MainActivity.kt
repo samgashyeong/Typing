@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.typing.R
 import com.example.typing.databinding.ActivityMainBinding
@@ -14,6 +15,7 @@ import com.example.typing.view.game.GameActivity
 import com.example.typing.view.login.LoginActivity
 import com.example.typing.view.login.SignUpActivity
 import com.example.typing.view.rank.RankActivity
+import com.example.typing.view.util.NetworkStatus
 import com.example.typing.view.util.ResourceLoader
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -45,11 +47,17 @@ class MainActivity : AppCompatActivity() {
             getUserInfo()
         }
         binding.rankBtn.setOnClickListener {
-            startActivity(
-                Intent(this, RankActivity::class.java)
-                    .putExtra("nickName", userName)
-                    .putExtra("email", userEmail)
-            )
+            val status = NetworkStatus.getConnectivityStatus(this)
+            if(status == 3){
+                Toast.makeText(this, "인터넷을 연결한 후에 시도해주세요", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                startActivity(
+                    Intent(this, RankActivity::class.java)
+                        .putExtra("nickName", userName)
+                        .putExtra("email", userEmail)
+                )
+            }
         }
 
         binding.timeAttackBtn.setOnClickListener {

@@ -54,7 +54,6 @@ class SignUpActivity : AppCompatActivity() {
         }.addOnFailureListener {
             Toast.makeText(this, "죄송합니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
         }
-
     }
 
     private fun applyDb(email: String, nickName: String) {
@@ -65,5 +64,6 @@ class SignUpActivity : AppCompatActivity() {
         )
         db.collection("user").document(auth.currentUser?.uid.toString())
             .set(data)
+        finish()
     }
 }

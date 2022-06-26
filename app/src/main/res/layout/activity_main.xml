@@ -31,7 +31,7 @@
             app:layout_constraintBottom_toTopOf="@+id/normal_game_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="오프라인 모드입니다." />
+            android:text="오프라인 모드입니다."/>
 
         <TextView
             android:id="@+id/textView3"
