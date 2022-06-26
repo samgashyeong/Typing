@@ -36,6 +36,7 @@ class RankingAdapter(val data : ArrayList<Ranking>, val binding : ActivityRankBi
         if(data[position].uid == uid){
             binding.rankingTv.text = "${position+1}등"
             binding.steersmanTv.text = "${data[position].typingSpeed}타"
+            Log.d(TAG, "onBindViewHolder: 같음")
         }
         val docRef = FirebaseFirestore.getInstance().collection("user").document(data[position].uid)
         docRef.get().addOnSuccessListener { document ->

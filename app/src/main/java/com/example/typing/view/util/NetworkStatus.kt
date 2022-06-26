@@ -25,6 +25,4 @@ class NetworkStatus {
             return TYPE_NOT_CONNECTED
         }
     }
-
-
 }

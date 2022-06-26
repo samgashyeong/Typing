@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(
                     Intent(this, RankActivity::class.java)
                         .putExtra("nickName", userName)
-                        .putExtra("email", userEmail)
+                        .putExtra("uid", userUid)
                 )
             }
         }
@@ -87,6 +87,7 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
     }
+
 
     private fun getUserInfo() {
         db.collection("user").document(auth.currentUser?.uid.toString()).get()
