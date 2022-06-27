@@ -18,7 +18,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.example.typing.R
 import com.example.typing.databinding.ActivityGameBinding
-import com.example.typing.view.rank.RankActivity
 import com.example.typing.view.util.KoreanSeparator
 import com.example.typing.view.util.ResourceLoader
 import java.util.*
@@ -159,18 +158,26 @@ class GameActivity : AppCompatActivity(), Runnable {
         builder.show()
     }
 
-    private fun gotoResultActivity() {
+    private fun getTPM(): Double {
         var correctLen = 0
         val typedLen = min(binding.typingEt.text.length, binding.typingTv.text.length)
         for (i in 0 until min(typedLen, typingText.length)) {
-            if(binding.typingEt.text[i] == typingText[i]) correctLen++
+            if (binding.typingEt.text[i] == typingText[i]) correctLen++
             else break
         }
-        val tpm = if(typeStart == -1L) 0.0 else KoreanSeparator.separate(typingText.substring(0 until correctLen)).length /
+        return if (typeStart == -1L) 0.0 else KoreanSeparator.separate(typingText.substring(0 until correctLen)).length /
                 (System.currentTimeMillis() - typeStart).toDouble() * 1000 * 60
+    }
+
+    private fun getAverageTPM(): Double {
+        return (totalTPM + getTPM()) / max(stage, 1)
+    }
+
+    private fun gotoResultActivity() {
+        var tpm = getTPM()
         Log.d(TAG, "gotoResultActivity: $tpm")
         val i = Intent(this@GameActivity, ResultActivity::class.java)
-        i.putExtra("averTPM", (totalTPM + tpm) / max(stage, 1))
+        i.putExtra("averTPM", getAverageTPM())
         i.putExtra("stage", clearedTextCount)
         startActivity(i)
         finish()
@@ -192,7 +199,7 @@ class GameActivity : AppCompatActivity(), Runnable {
                 }
                 start = System.currentTimeMillis()
                 currentTime++
-                if(typeStart > -1L && currentTime % 3 == 0) {
+                if(typeStart > -1L) {
                     var correctLen = 0
                     val typedLen = min(binding.typingEt.text.length, binding.typingTv.text.length)
                     for (i in 0 until min(typedLen, typingText.length)) {
@@ -211,6 +218,7 @@ class GameActivity : AppCompatActivity(), Runnable {
                         runOnUiThread {
                             binding.timeLimitTv.text = String.format("%.1f초", maxLimitTime)
                             binding.curTpmTv.text = "0타"
+                            binding.averTpmTv.text = String.format("%.1f타", getAverageTPM())
                             binding.typingEt.text.clear()
                             binding.typingTv.text = typingText
                         }
