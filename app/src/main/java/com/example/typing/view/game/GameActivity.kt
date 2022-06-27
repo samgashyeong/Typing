@@ -192,7 +192,7 @@ class GameActivity : AppCompatActivity(), Runnable {
                 }
                 start = System.currentTimeMillis()
                 currentTime++
-                if(typeStart > -1L && currentTime % 10 == 0) {
+                if(typeStart > -1L && currentTime % 3 == 0) {
                     var correctLen = 0
                     val typedLen = min(binding.typingEt.text.length, binding.typingTv.text.length)
                     for (i in 0 until min(typedLen, typingText.length)) {

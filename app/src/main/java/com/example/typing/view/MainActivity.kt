@@ -54,6 +54,9 @@ class MainActivity : AppCompatActivity() {
             if (status == NetworkStatus.TYPE_NOT_CONNECTED) {
                 Toast.makeText(this, "인터넷을 연결한 후에 시도해주세요", Toast.LENGTH_SHORT).show()
             }
+            else if(!this::userName.isInitialized) {
+                Toast.makeText(this, "유저 정보가 로딩되지 않았습니다. 잠시 후 다시 시도해주세요", Toast.LENGTH_SHORT).show()
+            }
             else {
                 startActivity(
                     Intent(this, RankActivity::class.java)
